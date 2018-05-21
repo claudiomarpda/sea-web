@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="UTF-8">
+  <!--Proportional rendering according to screen dimensions-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Compiled Bootstrap and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+  <title>SEA</title>
+</head>
+<body>
+<!--Shows sign out option if user is authenticated-->
+<div th:fragment="signout" sec:authorize="isAuthenticated()">
+  Logged in user: <span sec:authentication="name"></span> |
+  Roles: <span sec:authentication="principal.authorities"></span>
+  <div>
+    <form action="#" th:action="@{/logout}" method="post">
+      <input type="submit" value="Sign out"/>
+    </form>
+  </div>
+</div>
+<h1 th:text="${homeMessage}">static</h1>
+<p><a href="/user/profile">Sign In</a></p>
+</body>
+</html>
