@@ -12,7 +12,7 @@ public class AccountController {
     @RequestMapping("/signin")
     public String signIn(Principal principal) {
         // Check if user is already authenticated
-        return principal != null ? "/user/profile" : "signIn";
+        return principal != null ? "redirect:/user/profile" : "signIn";
     }
 
     @RequestMapping("/signin/error")
