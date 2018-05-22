@@ -14,7 +14,7 @@ public class User {
     @Column(name = "user_id")
     private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String email;
 
     private String firstName;
@@ -24,12 +24,10 @@ public class User {
     @JoinColumn(name = "address_id")
     private Address personalAddress;
 
-    @Nullable
     @ManyToMany(cascade = CascadeType.ALL)
     @Column(name = "knowledge_id")
     private List<Knowledge> knowledgeList = new ArrayList<>();
 
-    @Nullable
     @ElementCollection
     private List<String> usualPlaces = new ArrayList<>();
 
