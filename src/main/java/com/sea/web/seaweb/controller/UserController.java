@@ -28,11 +28,14 @@ public class UserController {
     }
 
     @PostMapping("/profile")
-    public String updateProfile(@ModelAttribute User user) {
+    public String updateProfile(@ModelAttribute User user, Model model) {
         User u = userService.findById(user.getId());
         u.setFirstName(user.getFirstName());
         u.setLastName(user.getLastName());
+        u.setPersonalAddress(user.getPersonalAddress());
         userService.save(u);
+
+        model.addAttribute("saved", true);
         return "profile";
     }
 }

@@ -14,7 +14,11 @@
 <body>
 <div th:replace="home::signout"></div>
 <div class="container">
+  <div th:if="${saved}" class="alert alert-success" align="center">
+    <strong>Success!</strong> Profile updated.
+  </div>
   <h2>Profile</h2>
+  <h3>You</h3>
   <form th:object="${user}" class="form-horizontal" method="post" th:action="@{/user/profile}">
     <input id="id" th:field="*{id}" type="hidden"/>
     <div class="form-group">
@@ -27,6 +31,31 @@
       <label class="col-sm-2 control-label">Last Name</label>
       <div class="col-sm-3">
         <input th:field="*{lastName}" class="form-control" type="text" placeholder="?" required>
+      </div>
+    </div>
+    <h3>Where you live</h3>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Country</label>
+      <div class="col-sm-3">
+        <input th:field="*{personalAddress.country}" class="form-control" type="text" placeholder="?" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">State</label>
+      <div class="col-sm-3">
+        <input th:field="*{personalAddress.state}" class="form-control" type="text" placeholder="?" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">City</label>
+      <div class="col-sm-3">
+        <input th:field="*{personalAddress.city}" class="form-control" type="text" placeholder="?" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Neighborhood</label>
+      <div class="col-sm-3">
+        <input th:field="*{personalAddress.neighborhood}" class="form-control" type="text" placeholder="?">
       </div>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>
