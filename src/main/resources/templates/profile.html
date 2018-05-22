@@ -12,21 +12,21 @@
   <title>Profile</title>
 </head>
 <body>
-<div th:substituteby="home::signout"></div>
+<div th:replace="home::signout"></div>
 <div class="container">
   <h2>Profile</h2>
-  <form th:object="${user}" class="form-horizontal" method="post" action="/user/profile">
+  <form th:object="${user}" class="form-horizontal" method="post" th:action="@{/user/profile}">
+    <input id="id" th:field="*{id}" type="hidden"/>
     <div class="form-group">
       <label class="col-sm-2 control-label">First Name</label>
       <div class="col-sm-3">
-        <p th:text="${user}"></p>
-        <!--<input th:field="*{firstName}" class="form-control" id="first_name" type="text" value="First Name" name="first_name" required>-->
+        <input th:field="*{firstName}" class="form-control" type="text" placeholder="?" required>
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">Last Name</label>
       <div class="col-sm-3">
-        <!--<input th:field="*{lastName}" class="form-control" id="last_name" type="text" value="Last Name" name="last_name" required>-->
+        <input th:field="*{lastName}" class="form-control" type="text" placeholder="?" required>
       </div>
     </div>
     <button type="submit" class="btn btn-primary">Save</button>

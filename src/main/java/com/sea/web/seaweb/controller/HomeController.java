@@ -13,9 +13,4 @@ public class HomeController {
         return "home";
     }
 
-    // TODO: Remove this mapping from here and take it to its on controller.
-    @RequestMapping("/user/profile")
-    public String profile() {
-        return "/user/profile";
-    }
 }

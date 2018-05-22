@@ -9,4 +9,6 @@ public interface UserService {
     void deleteById(Integer id);
 
     User findByEmail(String email);
+
+    User findById(Integer id);
 }

@@ -47,6 +47,12 @@ public class UserServiceTest {
         // Check data
         assertEquals(u2.getLastName(), u.getLastName());
 
+        User u3 = userService.findById(u.getId());
+        assertNotNull(u3);
+        // Invalid id
+        u3 = userService.findById(9999999);
+        assertNull(u3);
+
         // Delete
         userService.deleteById(u.getId());
         // Find null

@@ -13,4 +13,4 @@ logging:
   level:
     root: info
     org.springframework: info
-    org.springframework.boot: trace
+    org.springframework.boot: info
