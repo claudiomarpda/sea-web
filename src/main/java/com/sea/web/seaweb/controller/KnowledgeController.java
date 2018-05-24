@@ -12,7 +12,7 @@ public class KnowledgeController {
     @RequestMapping
     public String knowledge(Model model) {
         model.addAttribute(new Knowledge());
-        return "knowledge";
+        return "knowledgeAll";
     }
 
 }

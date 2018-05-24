@@ -29,7 +29,7 @@
   <h1>Knowledge</h1>
   <span class="help-block col-sm-6">Tell what you are willing to teach</span>
   <!--Add new-->
-  <p><a ng-click="show()" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span></a></p>
+  <p><a ng-click="show()" class="btn btn-primary   btn-lg"><span class="glyphicon glyphicon-plus"></span></a></p>
   <!--Form-->
   <div ng-hide="hideForm">
     <h2>Add new</h2>
@@ -48,16 +48,34 @@
           <span class="help-block">Briefly describe one knowledge</span>
         </div>
       </div>
-      <button ng-click="save()" type="button" class="btn btn-primary">Save</button>
-      <button ng-click="cancel()" type="button" class="btn btn-default">Cancel</button>
+      <div align="center">
+        <button ng-click="save()" type="button" class="btn btn-primary">Save</button>
+        <button ng-click="cancel()" type="button" class="btn btn-default">Cancel</button>
+      </div>
     </form>
   </div>
   <div ng-controller="restController">
     <h2>Your list</h2>
-    <table ng-if="knowledgeList != null">
-      <tr ng-repeat="x in knowledgeList">
-        <td>{{ x.title}}</td>
-        <td>{{ x.description }}</td>
+    <table ng-if="knowledgeList != null" class="table table-hover">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+      </tr>
+      </thead>
+      <tr ng-repeat="k in knowledgeList">
+        <td>{{$index + 1}}</td>
+        <td>{{ k.title}}</td>
+        <td></td>
+        <td></td>
+        <td>
+          <a href="#" class="btn btn-info btn-sm">
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>
+          <a href="#" class="btn btn-danger btn-sm">
+            <span class="glyphicon glyphicon-remove"></span>
+          </a>
+        </td>
       </tr>
     </table>
     <div ng-if="knowledgeList == null">
@@ -72,8 +90,7 @@
     var app = angular.module('myApp', []);
 
     app.controller('restController', function ($scope, $http) {
-        $http.get("/rest/all").then(function (response) {
-            // TODO: call REST API for user's knowledge list
+        $http.get("/user/knowledge/rest/all").then(function (response) {
             $scope.knowledgeList = response.data;
         });
     });
