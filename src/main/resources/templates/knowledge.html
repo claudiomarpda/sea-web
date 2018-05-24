@@ -2,39 +2,95 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <!--Proportional rendering according to screen dimensions-->
+  <!-- Proportional rendering according to screen dimensions -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Loading library with src link is also needed for prototyping -->
+  <!-- i.e, preview html with libraries effects without running the spring application -->
+  <!-- Check if there already is a webjar before going to production -->
 
   <!-- Compiled Bootstrap and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <!-- AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.min.js"></script>
+
+  <!--Webjars -->
+  <!-- Does not preview libraries in html, so we load them with src -->
+  <!-- Provides static analyzer when added to maven in pom.xml-->
+  <!-- No need to load webjar here to activate static analyzer -->
+  <!--<script th:src="@{/webjars/angularjs/1.7.0/angular.min.js}"></script>-->
 
   <title>Knowledge</title>
 </head>
 <body>
 <div th:replace="home::signout"></div>
-<div class="container">
-  <h1>Your knowledge list</h1>
-  <span class="help-block">Tell what you are willing to teach</span>
+<div ng-app="myApp" ng-controller="formController" class="container">
+  <h1>Knowledge</h1>
+  <span class="help-block col-sm-6">Tell what you are willing to teach</span>
   <!--Add new-->
-  <form th:object="${knowledge}" class="form-horizontal" action="/user/knowledge/update" method="post">
-    <!--<input id="id" type="hidden"/>-->
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Title</label>
-      <div class="col-sm-3">
-        <input th:field="*{title}" class="form-control" type="text" placeholder="?" required>
-        <span class="help-block">Only a few words</span>
+  <p><a ng-click="show()" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-plus"></span></a></p>
+  <!--Form-->
+  <div ng-hide="hideForm">
+    <h2>Add new</h2>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Title</label>
+        <div class="col-sm-3">
+          <input ng-model="title" class="form-control" type="text" placeholder="?" required>
+          <span class="help-block">Only a few words</span>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-sm-2 control-label">Description</label>
-      <div class="col-sm-3">
-        <textarea th:field="*{description}" class="form-control" rows="4" placeholder="?"></textarea>
-        <span class="help-block">Briefly describe one knowledge</span>
+      <div class="form-group">
+        <label class="col-sm-2 control-label">Description</label>
+        <div class="col-sm-3">
+          <textarea ng-model="description" class="form-control" rows="4" placeholder="?"></textarea>
+          <span class="help-block">Briefly describe one knowledge</span>
+        </div>
       </div>
+      <button ng-click="save()" type="button" class="btn btn-primary">Save</button>
+      <button ng-click="cancel()" type="button" class="btn btn-default">Cancel</button>
+    </form>
+  </div>
+  <div ng-controller="restController">
+    <h2>Your list</h2>
+    <table ng-if="knowledgeList != null">
+      <tr ng-repeat="x in knowledgeList">
+        <td>{{ x.title}}</td>
+        <td>{{ x.description }}</td>
+      </tr>
+    </table>
+    <div ng-if="knowledgeList == null">
+      <span class="help-block">Start adding some knowledge you have</span>
     </div>
-    <button type="submit" class="btn btn-primary">Add</button>
-    <button href="/user/knowledge" class="btn btn-default" type="button">Cancel</button>
-  </form>
+  </div>
 </div>
+<!-- Script is not in a separated file because it looses SECURITY CONTEXT -->
+<!-- When used in another file for REST API consuming, it get ACCESS DENIED-->
+<!-- Make sure you handle this before taking this script to another file -->
+<script>
+    var app = angular.module('myApp', []);
+
+    app.controller('restController', function ($scope, $http) {
+        $http.get("/rest/all").then(function (response) {
+            // TODO: call REST API for user's knowledge list
+            $scope.knowledgeList = response.data;
+        });
+    });
+
+    app.controller('formController', function ($scope) {
+        $scope.hideForm = true;
+        $scope.show = function () {
+            $scope.hideForm = false;
+        }
+        $scope.save = function () {
+            alert("TODO: save");
+            $scope.hideForm = true;
+        }
+        $scope.cancel = function () {
+            $scope.hideForm = true;
+        }
+    });
+</script>
 </body>
 </html>
