@@ -36,7 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/user/**").hasRole("USER");
+                .antMatchers("/user/**").hasRole("USER")
+                .and().
+                csrf().disable(); // CSRF on blocks angular requests
     }
 
 }

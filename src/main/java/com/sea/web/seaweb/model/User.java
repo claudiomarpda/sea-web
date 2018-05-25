@@ -26,6 +26,7 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @Column(name = "knowledge_id")
+    @OrderColumn
     private List<Knowledge> knowledgeList = new ArrayList<>();
 
     @ElementCollection

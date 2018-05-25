@@ -25,36 +25,38 @@
 </head>
 <body>
 <div th:replace="home::signout"></div>
-<div ng-app="myApp" ng-controller="formController" class="container">
+<section ng-app="myApp" class="container" ng-controller="knowledgeController">
   <h1>Knowledge</h1>
   <span class="help-block col-sm-6">Tell what you are willing to teach</span>
-  <!--Add new-->
-  <p><a ng-click="show()" class="btn btn-primary   btn-lg"><span class="glyphicon glyphicon-plus"></span></a></p>
-  <!--Form-->
-  <div ng-hide="hideForm">
-    <h2>Add new</h2>
-    <form class="form-horizontal">
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Title</label>
-        <div class="col-sm-3">
-          <input ng-model="title" class="form-control" type="text" placeholder="?" required>
-          <span class="help-block">Only a few words</span>
+  <div>
+    <!--Add new-->
+    <p><a ng-click="show()" class="btn btn-primary   btn-lg"><span class="glyphicon glyphicon-plus"></span></a></p>
+    <!--Form-->
+    <div ng-hide="hideForm">
+      <h2>Add new</h2>
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Title</label>
+          <div class="col-sm-3">
+            <input ng-model="title" class="form-control" type="text" placeholder="?" required>
+            <span class="help-block">Only a few words</span>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-sm-2 control-label">Description</label>
-        <div class="col-sm-3">
-          <textarea ng-model="description" class="form-control" rows="4" placeholder="?"></textarea>
-          <span class="help-block">Briefly describe one knowledge</span>
+        <div class="form-group">
+          <label class="col-sm-2 control-label">Description</label>
+          <div class="col-sm-3">
+            <textarea ng-model="description" class="form-control" rows="4" placeholder="?"></textarea>
+            <span class="help-block">Briefly describe one knowledge</span>
+          </div>
         </div>
-      </div>
-      <div align="center">
-        <button ng-click="save()" type="button" class="btn btn-primary">Save</button>
-        <button ng-click="cancel()" type="button" class="btn btn-default">Cancel</button>
-      </div>
-    </form>
+        <div align="center">
+          <button type="submit" ng-click="save(title, description)" class="btn btn-primary">Save</button>
+          <button ng-click="cancel()" type="button" class="btn btn-default">Cancel</button>
+        </div>
+      </form>
+    </div>
   </div>
-  <div ng-controller="restController">
+  <div ng-init="findAll()">
     <h2>Your list</h2>
     <table ng-if="knowledgeList != null" class="table table-hover">
       <thead>
@@ -69,10 +71,10 @@
         <td></td>
         <td></td>
         <td>
-          <a href="#" class="btn btn-info btn-sm">
+          <a href="" class="btn btn-info btn-sm">
             <span class="glyphicon glyphicon-edit"></span>
           </a>
-          <a href="#" class="btn btn-danger btn-sm">
+          <a href="#" class="btn btn-danger btn-sm" ng-click="delete($index)">
             <span class="glyphicon glyphicon-remove"></span>
           </a>
         </td>
@@ -82,31 +84,47 @@
       <span class="help-block">Start adding some knowledge you have</span>
     </div>
   </div>
-</div>
+</section>
 <!-- Script is not in a separated file because it looses SECURITY CONTEXT -->
 <!-- When used in another file for REST API consuming, it get ACCESS DENIED-->
 <!-- Make sure you handle this before taking this script to another file -->
 <script>
     var app = angular.module('myApp', []);
 
-    app.controller('restController', function ($scope, $http) {
-        $http.get("/user/knowledge/rest/all").then(function (response) {
-            $scope.knowledgeList = response.data;
-        });
-    });
+    app.controller('knowledgeController', function ($scope, $http) {
 
-    app.controller('formController', function ($scope) {
         $scope.hideForm = true;
+
         $scope.show = function () {
             $scope.hideForm = false;
-        }
-        $scope.save = function () {
-            alert("TODO: save");
-            $scope.hideForm = true;
-        }
+        };
+
         $scope.cancel = function () {
             $scope.hideForm = true;
-        }
+        };
+
+        $scope.findAll = function () {
+            $http.get("/user/knowledge/rest/all").then(function (value) {
+                $scope.knowledgeList = value.data;
+            });
+        };
+
+        $scope.save = function (title, description) {
+            $http.post('/user/knowledge/rest/' + title + '/' + description)
+                .then(function () {
+                    $scope.findAll();
+                    $scope.hideForm = true;
+                    $scope.title = '';
+                    $scope.description = '';
+                })
+        };
+
+        $scope.delete = function (index) {
+            $http.delete('/user/knowledge/rest/' + index).then(function () {
+                $scope.findAll();
+            })
+        };
+
     });
 </script>
 </body>
