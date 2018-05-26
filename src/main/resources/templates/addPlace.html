@@ -88,6 +88,9 @@
         };
 
         $scope.save = function (title) {
+            if (title == null) {
+                return;
+            }
             $http.post('/user/place/rest/' + title)
                 .then(function () {
                     $scope.findAll();
