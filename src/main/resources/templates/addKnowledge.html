@@ -30,34 +30,30 @@
 <section ng-app="myApp" class="container" ng-controller="knowledgeController">
   <h1>Knowledge</h1>
   <span class="help-block col-sm-6">Tell what you are willing to teach</span>
-  <div>
-    <!--Add new-->
-    <p><a ng-click="show()" class="btn btn-primary   btn-lg"><span class="glyphicon glyphicon-plus"></span></a></p>
-    <!--Form-->
-    <div ng-hide="hideForm">
-      <h2>Add new</h2>
-      <form class="form-horizontal">
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Title</label>
-          <div class="col-sm-3">
-            <input ng-model="title" class="form-control" type="text" placeholder="?" required>
-            <span class="help-block">Only a few words</span>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label">Description</label>
-          <div class="col-sm-3">
-            <textarea ng-model="description" class="form-control" rows="4" placeholder="?"></textarea>
-            <span class="help-block">Briefly describe one knowledge</span>
-          </div>
-        </div>
-        <div align="center">
-          <button type="submit" ng-click="save(title, description)" class="btn btn-primary">Save</button>
-          <button ng-click="cancel()" type="button" class="btn btn-default">Cancel</button>
-        </div>
-      </form>
+  <!--Add new-->
+  <p><a ng-click="show()" class="btn btn-primary   btn-lg"><span class="glyphicon glyphicon-plus"></span></a></p>
+  <!--Form-->
+  <form class="form-horizontal" ng-hide="hideForm">
+    <h2>Add new</h2>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Title</label>
+      <div class="col-sm-3">
+        <input ng-model="title" class="form-control" type="text" placeholder="?" required>
+        <span class="help-block">Only a few words</span>
+      </div>
     </div>
-  </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Description</label>
+      <div class="col-sm-3">
+        <textarea ng-model="description" class="form-control" rows="4" placeholder="?"></textarea>
+        <span class="help-block">Briefly describe one knowledge</span>
+      </div>
+    </div>
+    <div align="center">
+      <button type="submit" ng-click="save(title, description)" class="btn btn-primary">Save</button>
+      <button ng-click="cancel()" type="button" class="btn btn-default">Cancel</button>
+    </div>
+  </form>
   <div ng-init="findAll()">
     <h2>Your list</h2>
     <table ng-if="knowledgeList != null" class="table table-hover">

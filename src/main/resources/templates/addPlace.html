@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.min.js"></script>
+  <title>Places</title>
+</head>
+<body>
+<header th:replace="topBar::topBar"></header>
+<section ng-app="myApp" class="container" ng-controller="placeController">
+  <h1>Usual Places</h1>
+  <span class="help-block">Where you usually study</span>
+  <!--Add new-->
+  <p><a ng-click="show()" class="btn btn-primary   btn-lg"><span class="glyphicon glyphicon-plus"></span></a></p>
+  <!--Form-->
+  <form class="form-horizontal" ng-hide="hideForm">
+    <h2 align="left">Add new</h2>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">Title</label>
+      <div class="col-sm-3">
+        <input ng-model="title" class="form-control" type="text" placeholder="?" required>
+        <span class="help-block">Type keywords. Ex: UFPB, UFRJ</span>
+      </div>
+    </div>
+    <div align="center">
+      <button type="submit" ng-click="save(title)" class="btn btn-primary">Save</button>
+      <button ng-click="cancel()" type="button" class="btn btn-default">Cancel</button>
+    </div>
+  </form>
+  <h3>Your list</h3>
+  <div ng-init="findAll()" class="col-sm-8">
+    <table ng-if="placeList != null" class="table table-hover">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+      </tr>
+      </thead>
+      <tr ng-repeat="k in placeList">
+        <td>{{$index + 1}}</td>
+        <td>{{ k.title}}</td>
+        <td></td>
+        <td></td>
+        <td>
+          <a href="" class="btn btn-info btn-sm">
+            <span class="glyphicon glyphicon-edit"></span>
+          </a>
+          <a href="#" class="btn btn-danger btn-sm" ng-click="delete($index)">
+            <span class="glyphicon glyphicon-remove"></span>
+          </a>
+        </td>
+      </tr>
+    </table>
+    <div ng-if="placeList == null">
+      <span class="help-block">Start adding some knowledge you have</span>
+    </div>
+  </div>
+</section>
+</body>
+<!-- Script is not in a separated file because it looses SECURITY CONTEXT -->
+<!-- When used in another file for REST API consuming, it get ACCESS DENIED-->
+<!-- Make sure you handle this before taking this script to another file -->
+<script>
+    var app = angular.module('myApp', []);
+
+    app.controller('placeController', function ($scope, $http) {
+
+        $scope.hideForm = true;
+
+        $scope.show = function () {
+            $scope.hideForm = false;
+        };
+
+        $scope.cancel = function () {
+            $scope.hideForm = true;
+            $scope.title = '';
+        };
+
+    });
+</script>
+</html>
