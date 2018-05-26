@@ -59,4 +59,22 @@ public class UserServiceTest {
         u = userService.findByEmail("some@email.com");
         assertNull(u);
     }
+
+    @Test
+    public void findByPlaceShouldSucceed() {
+        Iterable<User> it = userService.findByUsualPlaces("ufpb");
+        assertNotNull(it);
+        System.out.println("################# ");
+        it.forEach(c -> System.out.println(c.getFirstName()));
+
+        Iterable<User> it2 = userService.findByKnowledge("some");
+        assertNotNull(it2);
+        System.out.println("################# ");
+        it2.forEach(c -> System.out.println(c.getFirstName()));
+
+        Iterable<User> it3 = userService.findByKnowledgeAndPlace("some", "ifpb", 1);
+        assertNotNull(it3);
+        System.out.println("################# ");
+        it3.forEach(c -> System.out.println(c.getFirstName()));
+    }
 }

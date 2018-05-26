@@ -34,14 +34,14 @@
   </form>
   <h3>Your list</h3>
   <div ng-init="findAll()" class="col-sm-8">
-    <table ng-if="placeList != null" class="table table-hover">
+    <table ng-if="userList != null" class="table table-hover">
       <thead>
       <tr>
         <th>#</th>
         <th>Title</th>
       </tr>
       </thead>
-      <tr ng-repeat="p in placeList">
+      <tr ng-repeat="p in userList">
         <td>{{$index + 1}}</td>
         <td>{{p}}</td>
         <td></td>
@@ -56,7 +56,7 @@
         </td>
       </tr>
     </table>
-    <div ng-if="placeList == null">
+    <div ng-if="userList == null">
       <span class="help-block">Start adding some knowledge you have</span>
     </div>
   </div>
@@ -83,7 +83,7 @@
 
         $scope.findAll = function () {
             $http.get("/user/place/rest/all").then(function (value) {
-                $scope.placeList = value.data;
+                $scope.userList = value.data;
             });
         };
 

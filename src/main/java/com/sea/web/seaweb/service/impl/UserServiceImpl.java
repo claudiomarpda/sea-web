@@ -6,6 +6,10 @@ import com.sea.web.seaweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -34,5 +38,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findById(Integer id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Iterable<User> findByUsualPlaces(String place) {
+        return userRepository.findByUsualPlaces(place);
+    }
+
+    @Override
+    public Iterable<User> findByKnowledge(String title) {
+        return userRepository.findByKnowledgeListTitleContaining(title);
+    }
+
+    @Override
+    public List<User> findByKnowledgeAndPlace(String title, String place, int userId) {
+        List<User> list = userRepository.findByKnowledgeListTitleContainingAndUsualPlaces(title, place);
+        list.removeIf(c -> c.getId().equals(userId));
+        return list;
     }
 }

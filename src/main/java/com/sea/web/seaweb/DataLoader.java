@@ -22,11 +22,29 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
         User user = new User("w@w.com", "First", "Last");
         List<Knowledge> kList = new ArrayList<>();
         kList.add(new Knowledge("Some title", "Some description"));
         user.setKnowledgeList(kList);
-
+        user.getUsualPlaces().add("UFPB");
         userService.save(user);
+
+        for (int i = 1; i <= 5; i++) {
+            user = new User("w@w.com" + i, "First" + i, "Last" + i);
+            kList = new ArrayList<>();
+            kList.add(new Knowledge("Some title" + i, "Some description" + i));
+            user.setKnowledgeList(kList);
+            user.getUsualPlaces().add("UFPB");
+            userService.save(user);
+        }
+        for (int i = 6; i <= 10; i++) {
+            user = new User("w@w.com" + i, "First" + i, "Last" + i);
+            kList = new ArrayList<>();
+            kList.add(new Knowledge("Some title" + i, "Some description" + i));
+            user.setKnowledgeList(kList);
+            user.getUsualPlaces().add("IFPB");
+            userService.save(user);
+        }
     }
 }
