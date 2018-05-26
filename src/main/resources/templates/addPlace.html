@@ -14,7 +14,7 @@
 <header th:replace="topBar::topBar"></header>
 <section ng-app="myApp" class="container" ng-controller="placeController">
   <h1>Usual Places</h1>
-  <span class="help-block">Where you usually study</span>
+  <span class="help-block col-sm-6">Where you usually study</span>
   <!--Add new-->
   <p><a ng-click="show()" class="btn btn-primary   btn-lg"><span class="glyphicon glyphicon-plus"></span></a></p>
   <!--Form-->
@@ -41,9 +41,9 @@
         <th>Title</th>
       </tr>
       </thead>
-      <tr ng-repeat="k in placeList">
+      <tr ng-repeat="p in placeList">
         <td>{{$index + 1}}</td>
-        <td>{{ k.title}}</td>
+        <td>{{p}}</td>
         <td></td>
         <td></td>
         <td>
@@ -81,6 +81,26 @@
             $scope.title = '';
         };
 
+        $scope.findAll = function () {
+            $http.get("/user/place/rest/all").then(function (value) {
+                $scope.placeList = value.data;
+            });
+        };
+
+        $scope.save = function (title) {
+            $http.post('/user/place/rest/' + title)
+                .then(function () {
+                    $scope.findAll();
+                    $scope.hideForm = true;
+                    $scope.title = '';
+                })
+        };
+
+        $scope.delete = function (index) {
+            $http.delete('/user/place/rest/' + index).then(function () {
+                $scope.findAll();
+            })
+        };
     });
 </script>
 </html>

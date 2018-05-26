@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/user/profile")
 public class UserController {
 
     private final UserService userService;
@@ -20,14 +20,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/profile")
+    @GetMapping
     public String profile(Principal principal, Model model) {
         User user = userService.findByEmail(principal.getName());
         model.addAttribute(user);
         return "profile";
     }
 
-    @PostMapping("/profile")
+    @PostMapping
     public String updateProfile(@ModelAttribute User user, Model model) {
         User u = userService.findById(user.getId());
         u.setFirstName(user.getFirstName());

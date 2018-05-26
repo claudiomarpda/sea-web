@@ -37,15 +37,11 @@ public class KnowledgeRestController {
     }
 
     @DeleteMapping("/{index}")
-    public void delete(Principal principal, @PathVariable String index) {
+    public void delete(Principal principal, @PathVariable int index) {
         User u = userService.findByEmail(principal.getName());
-        int i = Integer.valueOf(index);
-
-        Knowledge k = u.getKnowledgeList().get(i);
-        u.getKnowledgeList().remove(i);
+        Knowledge k = u.getKnowledgeList().get(index);
+        u.getKnowledgeList().remove(index);
         userService.save(u);
-
         knowledgeService.deleteById(k.getId());
-
     }
 }
