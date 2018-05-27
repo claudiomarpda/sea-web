@@ -27,7 +27,7 @@ public class UserController {
         return "profile";
     }
 
-    @PostMapping("profile")
+    @PostMapping("/profile")
     public String updateProfile(@ModelAttribute User user, Model model) {
         User u = userService.findById(user.getId());
         u.setFirstName(user.getFirstName());
@@ -40,7 +40,7 @@ public class UserController {
     }
 
     @GetMapping
-    public String user(@RequestParam int id, Model model) {
+    public String findById(@RequestParam int id, Model model) {
         User user = userService.findById(id);
         model.addAttribute(user);
         System.out.println("user " + id);
