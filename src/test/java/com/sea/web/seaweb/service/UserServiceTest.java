@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -35,6 +36,7 @@ public class UserServiceTest {
         upList.add("Place 1");
         upList.add("Place 2");
         u.setUsualPlaces(upList);
+        u.setPassword("pass");
 
         // Save
         userService.save(u);
@@ -42,22 +44,22 @@ public class UserServiceTest {
         u.setLastName("Updated Last Name");
         userService.save(u);
         // Find
-        User u2 = userService.findByEmail("some@email.com");
-        assertNotNull(u2);
+        Optional<User> opt2 = userService.findByEmail("some@email.com");
+        assertNotNull(opt2.get());
         // Check data
-        assertEquals(u2.getLastName(), u.getLastName());
+        assertEquals(opt2.get().getLastName(), u.getLastName());
 
-        User u3 = userService.findById(u.getId());
-        assertNotNull(u3);
+        Optional<User> opt3 = userService.findById(u.getId());
+        assertNotNull(opt3.get());
         // Invalid id
-        u3 = userService.findById(9999999);
-        assertNull(u3);
+        opt3 = userService.findById(9999999);
+        assertFalse(opt3.isPresent());
 
         // Delete
         userService.deleteById(u.getId());
         // Find null
-        u = userService.findByEmail("some@email.com");
-        assertNull(u);
+        Optional<User> opt = userService.findByEmail("some@email.com");
+        assertFalse(opt.isPresent());
     }
 
     @Test

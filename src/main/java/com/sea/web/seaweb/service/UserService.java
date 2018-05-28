@@ -3,6 +3,7 @@ package com.sea.web.seaweb.service;
 import com.sea.web.seaweb.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -10,9 +11,9 @@ public interface UserService {
 
     void deleteById(Integer id);
 
-    User findByEmail(String email);
+    Optional<User> findByEmail(String email);
 
-    User findById(Integer id);
+    Optional<User> findById(Integer id);
 
     Iterable<User> findByUsualPlaces(String place);
 

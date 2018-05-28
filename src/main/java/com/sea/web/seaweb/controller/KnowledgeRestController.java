@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user/knowledge/rest")
@@ -25,23 +26,28 @@ public class KnowledgeRestController {
 
     @GetMapping("/all")
     public List<Knowledge> findAll(Principal principal) {
-        User u = userService.findByEmail(principal.getName());
-        return u.getKnowledgeList();
+        Optional<User> opt = userService.findByEmail(principal.getName());
+        return opt.map(User::getKnowledgeList).orElse(null);
     }
 
     @PostMapping("/{title}/{description}")
     public void save(Principal principal, @PathVariable String title, @PathVariable String description) {
-        User u = userService.findByEmail(principal.getName());
-        u.getKnowledgeList().add(new Knowledge(title, description));
-        userService.save(u);
+        Optional<User> opt = userService.findByEmail(principal.getName());
+        if(opt.isPresent()) {
+            opt.get().getKnowledgeList().add(new Knowledge(title, description));
+            userService.save(opt.get());
+        }
     }
 
     @DeleteMapping("/{index}")
     public void delete(Principal principal, @PathVariable int index) {
-        User u = userService.findByEmail(principal.getName());
-        Knowledge k = u.getKnowledgeList().get(index);
-        u.getKnowledgeList().remove(index);
-        userService.save(u);
-        knowledgeService.deleteById(k.getId());
+        Optional<User> opt = userService.findByEmail(principal.getName());
+        if(opt.isPresent()) {
+            User u = opt.get();
+            Knowledge k = u.getKnowledgeList().get(index);
+            u.getKnowledgeList().remove(index);
+            userService.save(u);
+            knowledgeService.deleteById(k.getId());
+        }
     }
 }

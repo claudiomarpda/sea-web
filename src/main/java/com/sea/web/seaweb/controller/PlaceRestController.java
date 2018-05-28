@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user/place/rest")
@@ -21,21 +22,21 @@ public class PlaceRestController {
 
     @GetMapping("/all")
     public List<String> findAll(Principal principal) {
-        User u = userService.findByEmail(principal.getName());
-        return u.getUsualPlaces();
+        Optional<User> opt = userService.findByEmail(principal.getName());
+        return opt.map(User::getUsualPlaces).orElse(null);
     }
 
     @PostMapping("/{title}")
     public void save(Principal principal, @PathVariable String title) {
-        User u = userService.findByEmail(principal.getName());
-        u.getUsualPlaces().add(title);
-        userService.save(u);
+        Optional<User> opt = userService.findByEmail(principal.getName());
+        opt.ifPresent(c -> c.getUsualPlaces().add(title));
+        opt.ifPresent(userService::save);
     }
 
     @DeleteMapping("/{index}")
     public void delete(Principal principal, @PathVariable int index) {
-        User u = userService.findByEmail(principal.getName());
-        u.getUsualPlaces().remove(index);
-        userService.save(u);
+        Optional<User> opt = userService.findByEmail(principal.getName());
+        opt.ifPresent(c -> c.getUsualPlaces().remove(index));
+        opt.ifPresent(userService::save);
     }
 }

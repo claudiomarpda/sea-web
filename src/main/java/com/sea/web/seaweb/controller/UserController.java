@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user")
@@ -22,18 +23,21 @@ public class UserController {
 
     @GetMapping("/profile")
     public String profile(Principal principal, Model model) {
-        User user = userService.findByEmail(principal.getName());
-        model.addAttribute(user);
+        Optional<User> opt = userService.findByEmail(principal.getName());
+        opt.ifPresent(model::addAttribute);
         return "profile";
     }
 
     @PostMapping("/profile")
     public String updateProfile(@ModelAttribute User user, Model model) {
-        User u = userService.findById(user.getId());
-        u.setFirstName(user.getFirstName());
-        u.setLastName(user.getLastName());
-        u.setPersonalAddress(user.getPersonalAddress());
-        userService.save(u);
+        Optional<User> opt = userService.findById(user.getId());
+        if(opt.isPresent()) {
+            User u = opt.get();
+            u.setFirstName(user.getFirstName());
+            u.setLastName(user.getLastName());
+            u.setPersonalAddress(user.getPersonalAddress());
+            userService.save(u);
+        }
 
         model.addAttribute("saved", true);
         return "profile";
@@ -41,8 +45,8 @@ public class UserController {
 
     @GetMapping
     public String findById(@RequestParam int id, Model model) {
-        User user = userService.findById(id);
-        model.addAttribute(user);
+        Optional<User> opt = userService.findById(id);
+        opt.ifPresent(model::addAttribute);
         System.out.println("user " + id);
         return "user";
     }

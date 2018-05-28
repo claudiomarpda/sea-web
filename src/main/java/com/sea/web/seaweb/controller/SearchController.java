@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/user/search")
@@ -32,9 +33,12 @@ public class SearchController {
 
     @GetMapping("/")
     public String findByKnowledgeAndPlace(@ModelAttribute Search search, Principal principal) {
-        User u = userService.findByEmail(principal.getName());
-        List<User> users = userService.findByKnowledgeAndPlace(search.getKnowledge(), search.getPlace(), u.getId());
-        search.setResult(users);
+        Optional<User> opt = userService.findByEmail(principal.getName());
+        if (opt.isPresent()) {
+            List<User> users = userService.findByKnowledgeAndPlace(
+                    search.getKnowledge(), search.getPlace(), opt.get().getId());
+            search.setResult(users);
+        }
         return "search";
     }
 }
