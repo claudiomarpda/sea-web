@@ -28,6 +28,7 @@ public class DataLoader implements CommandLineRunner {
         kList.add(new Knowledge("Some title", "Some description"));
         user.setKnowledgeList(kList);
         user.getUsualPlaces().add("UFPB");
+        user.setPassword("w");
         userService.save(user);
 
         for (int i = 1; i <= 5; i++) {
@@ -36,6 +37,7 @@ public class DataLoader implements CommandLineRunner {
             kList.add(new Knowledge("Some title" + i, "Some description" + i));
             user.setKnowledgeList(kList);
             user.getUsualPlaces().add("UFPB");
+            user.setPassword("pass" + i);
             userService.save(user);
         }
         for (int i = 6; i <= 10; i++) {
@@ -44,6 +46,7 @@ public class DataLoader implements CommandLineRunner {
             kList.add(new Knowledge("Some title" + i, "Some description" + i));
             user.setKnowledgeList(kList);
             user.getUsualPlaces().add("IFPB");
+            user.setPassword("pass" + i);
             userService.save(user);
         }
     }

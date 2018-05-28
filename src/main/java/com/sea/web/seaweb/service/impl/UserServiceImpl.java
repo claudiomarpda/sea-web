@@ -4,24 +4,26 @@ import com.sea.web.seaweb.model.User;
 import com.sea.web.seaweb.repository.UserRepository;
 import com.sea.web.seaweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder encoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
+        this.encoder = encoder;
     }
 
     @Override
     public void save(User u) {
+        u.setPassword(encoder.encode(u.getPassword()));
         userRepository.save(u);
     }
 
