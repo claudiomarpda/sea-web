@@ -17,6 +17,7 @@ public class User {
     private String password;
     private String firstName;
     private String lastName;
+    private String gender;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
@@ -77,6 +78,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public Address getPersonalAddress() {

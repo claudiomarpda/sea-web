@@ -24,16 +24,16 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="/user/search/home">Search</a></li>
-        <li><a href="/user/knowledge">Knowledge</a></li>
-        <li><a href="/user/place">Places</a></li>
-        <li><a href="/user/profile">Profile</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/user/search/home">Search</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/user/knowledge">Knowledge</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/user/place">Places</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/user/profile">Profile</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li sec:authorize="!isAuthenticated()"><a href="#">Sign Up</a></li>
+        <li sec:authorize="!isAuthenticated()"><a href="/signup">Sign Up</a></li>
         <li sec:authorize="!isAuthenticated()"><a href="/signin">Login</a></li>
         <!--Shows sign out option if user is authenticated-->
-        <li th:fragment="signout" sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
       </ul>
     </div>
   </div>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Compiled Bootstrap and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <!--JQuery for showing bar dropdown-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>Sign Up</title>
+</head>
+<body>
+<header th:replace="topBar::topBar"></header>
+<!--Sign up container-->
+<section class="container">
+  <div class="col-md-4 col-md-offset-4">
+    <h2>Sign Up</h2>
+    <p class="alert alert-info">Great! Create you account so you can enjoy our services as well.</p>
+    <!--Alerts-->
+    <!--<div class="alert alert-danger" th:if="${signUpError}">Checkout the fields below</div>-->
+    <!--Form-->
+    <form th:object="${userForm}" th:action="@{/signup}" method="post">
+      <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input th:field="*{firstName}" type="text" class="form-control" id="first_name" placeholder="First Name"
+               autofocus="autofocus" required>
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></div>
+      </div>
+      <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input th:field="*{lastName}" type="text" class="form-control" id="last_name" placeholder="Last Name"
+               autofocus="autofocus" required>
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('lastName')}" th:errors="*{firstName}"></div>
+      </div>
+      <div class="form-group">
+        <label class="radio-inline">
+          <input th:field="*{gender}" type="radio" value="Male">Male
+        </label>
+        <label class="radio-inline">
+          <input th:field="*{gender}" type="radio" value="Female">Female
+        </label>
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input th:field="*{email}" type="email" class="form-control" id="email" placeholder="Email"
+               autofocus="autofocus" required>
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+        <div class="alert alert-danger" th:if="${emailExists}">Enter another email</div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input th:field="*{password}" type="password" class="form-control" id="password" placeholder="Password"
+               required>
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+    </form>
+  </div>
+</section>
+</body>
+</html>
