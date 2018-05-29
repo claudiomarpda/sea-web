@@ -26,5 +26,8 @@ public class UserFactory {
             user.setEmail(updater.getEmail());
         if(updater.getPersonalAddress()!= null)
             user.setPersonalAddress(updater.getPersonalAddress());
+        if(updater.getBiography() != null)
+            user.setBiography(updater.getBiography());
+        user.setRemote(updater.isRemote());
     }
 }
