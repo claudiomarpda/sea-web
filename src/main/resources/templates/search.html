@@ -52,7 +52,7 @@
         <td th:text="${user.firstName}"></td>
         <td th:text="${user.biography}"></td>
         <td>
-          <a th:href="@{'/user?id=' + ${user.getId()}}">
+          <a th:href="@{'/user/' + ${user.getId()}}">
             <button class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Profile</button>
           </a>
         </td>

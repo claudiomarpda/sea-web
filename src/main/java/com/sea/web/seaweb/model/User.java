@@ -2,7 +2,9 @@ package com.sea.web.seaweb.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 public class User {
@@ -26,7 +28,7 @@ public class User {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
-    private Address personalAddress;
+    private Address personalAddress = new Address();
 
     @ManyToMany(cascade = CascadeType.ALL)
     @Column(name = "knowledge_id")
@@ -35,6 +37,10 @@ public class User {
 
     @ElementCollection
     private List<String> usualPlaces = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn( name = "contact_request_id")
+    private Map<Integer, ContactRequest> contactsRequest = new HashMap<>();
 
     public User() {
     }
@@ -139,5 +145,13 @@ public class User {
 
     public void setUsualPlaces(List<String> usualPlaces) {
         this.usualPlaces = usualPlaces;
+    }
+
+    public Map<Integer, ContactRequest> getContactsRequest() {
+        return contactsRequest;
+    }
+
+    public void setContactsRequest(Map<Integer, ContactRequest> contactsRequest) {
+        this.contactsRequest = contactsRequest;
     }
 }

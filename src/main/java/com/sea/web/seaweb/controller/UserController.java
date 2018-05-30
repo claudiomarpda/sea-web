@@ -72,8 +72,8 @@ public class UserController {
         return "profile";
     }
 
-    @GetMapping
-    public String findById(@RequestParam int id, Model model) {
+    @GetMapping("/{id}")
+    public String findById(@PathVariable int id, Model model) {
         Optional<User> opt = userService.findById(id);
         opt.ifPresent(c -> model.addAttribute("user", c));
         return "user";
