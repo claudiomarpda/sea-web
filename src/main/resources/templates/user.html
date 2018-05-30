@@ -10,8 +10,8 @@
 </head>
 <body>
 <header th:replace="topBar::topBar"></header>
-<section class="container" style="margin: 50px">
-  <div th:object="${user}" class="form-horizontal">
+<section class="container">
+  <div th:object="${user}" class="form-horizontal" style="margin: 50px">
     <div class="form-group col-sm-10">
       <div class="col-sm-3">
         <label>
@@ -23,7 +23,14 @@
       </div>
       <div class="col-sm-8">
         <h1 th:text="*{firstName + ' ' +lastName}">static</h1>
-        <button class="btn btn-primary"><span class="glyphicon glyphicon-user"></span> Request Contact</button>
+        <form th:if="!${requestExists} and !${areConnected}" th:method="post"
+              th:action="@{'/user/contact/request/' + ${user.id}}">
+          <button class="btn btn-primary" type="submit">
+            <span class="glyphicon glyphicon-user"></span> Request Contact
+          </button>
+        </form>
+        <h3><span th:if="${requestExists}" class="label label-info">Request exists</span></h3>
+        <h3><span th:if="${areConnected}" class="label label-info">You are connected</span></h3>
       </div>
     </div>
     <div class="form-group">

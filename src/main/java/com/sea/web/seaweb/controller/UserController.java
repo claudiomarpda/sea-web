@@ -73,9 +73,33 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String findById(@PathVariable int id, Model model) {
-        Optional<User> opt = userService.findById(id);
-        opt.ifPresent(c -> model.addAttribute("user", c));
+    public String findById(@PathVariable int id, Model model, Principal principal) {
+        Optional<User> optSender = userService.findByEmail(principal.getName());
+        if(optSender.isPresent()) {
+            User sender = optSender.get();
+
+            Optional<User> opt = userService.findById(id);
+            if (opt.isPresent()) {
+                User user = opt.get();
+                model.addAttribute(user);
+            }
+
+            if(sender.getContactsRequest().containsKey(id)) {
+                System.out.println("contains");
+                if(sender.getContactsRequest().get(id).isAccepted()) {
+                    model.addAttribute("areConnected", true);
+
+                }
+                else {
+                    model.addAttribute("requestExists", true);
+                }
+                return "user";
+            }
+            else {
+                model.addAttribute("requestExists", false);
+            }
+
+        }
         return "user";
     }
 
