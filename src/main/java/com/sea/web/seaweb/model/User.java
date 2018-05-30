@@ -21,6 +21,9 @@ public class User {
     private String biography;
     private boolean remote;
 
+    @Lob
+    private byte[] image;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address personalAddress;
@@ -104,6 +107,14 @@ public class User {
 
     public void setRemote(boolean remote) {
         this.remote = remote;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Address getPersonalAddress() {

@@ -20,10 +20,17 @@
   <div th:if="${saved}" class="alert alert-success" align="center">
     <strong>Success!</strong> Profile updated.
   </div>
-  <h2>Profile</h2>
-  <h3>You</h3>
-  <form th:object="${user}" class="form-horizontal" method="post" th:action="@{/user/profile}">
+  <h1>Your Profile</h1>
+  <form th:object="${user}" class="form-horizontal" method="post" enctype="multipart/form-data"
+        th:action="@{/user/profile}">
     <input id="id" th:field="*{id}" type="hidden"/>
+    <div class="form-group" style="margin-left: 20px">
+      <label>
+        <img th:if="${hasImage}" th:src="@{'/user/image/'+ ${user.id}}" class="img-circle" width="150" height="150">
+        <img th:if="!${hasImage}" th:src="@{/img/default-profile.png}" class="img-circle" width="150" height="150">
+        <span><input type="file" name="file" style="opacity: 0"></span>
+      </label>
+    </div>
     <div class="form-group">
       <label class="col-sm-2 control-label">First Name</label>
       <div class="col-sm-3">
@@ -51,7 +58,7 @@
         <input th:field="*{remote}" type="radio" name="remote" value="false">No
       </label>
     </div>
-    <h3>Where you live</h3>
+    <h2>Where you live</h2>
     <div class="form-group">
       <label class="col-sm-2 control-label">Country</label>
       <div class="col-sm-3">
