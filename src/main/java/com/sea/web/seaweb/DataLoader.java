@@ -5,6 +5,7 @@ import com.sea.web.seaweb.model.User;
 import com.sea.web.seaweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -14,10 +15,12 @@ import java.util.List;
 public class DataLoader implements CommandLineRunner {
 
     private final UserService userService;
+    private PasswordEncoder encoder;
 
     @Autowired
-    public DataLoader(UserService userService) {
+    public DataLoader(UserService userService, PasswordEncoder encoder) {
         this.userService = userService;
+        this.encoder = encoder;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class DataLoader implements CommandLineRunner {
         kList.add(new Knowledge("Some title", "Some description"));
         user.setKnowledgeList(kList);
         user.getUsualPlaces().add("UFPB");
-        user.setPassword("w");
+        user.setPassword(encoder.encode("w"));
         user.setGender("Male");
         userService.save(user);
 
@@ -38,7 +41,7 @@ public class DataLoader implements CommandLineRunner {
             kList.add(new Knowledge("Some title" + i, "Some description" + i));
             user.setKnowledgeList(kList);
             user.getUsualPlaces().add("UFPB");
-            user.setPassword("pass" + i);
+            user.setPassword(encoder.encode("pass" + i));
             user.setGender("Male");
             userService.save(user);
         }
@@ -48,7 +51,7 @@ public class DataLoader implements CommandLineRunner {
             kList.add(new Knowledge("Some title" + i, "Some description" + i));
             user.setKnowledgeList(kList);
             user.getUsualPlaces().add("IFPB");
-            user.setPassword("pass" + i);
+            user.setPassword(encoder.encode("pass" + i));
             user.setGender("Female");
             userService.save(user);
         }

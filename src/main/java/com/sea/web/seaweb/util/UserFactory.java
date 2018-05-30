@@ -16,17 +16,17 @@ public class UserFactory {
     }
 
     public static void update(User user, User updater) {
-        if(updater.getFirstName() != null)
+        if (updater.getFirstName() != null)
             user.setFirstName(updater.getFirstName());
-        if(updater.getLastName() != null)
+        if (updater.getLastName() != null)
             user.setLastName(updater.getLastName());
-        if(updater.getGender() != null)
+        if (updater.getGender() != null)
             user.setGender(updater.getGender());
-        if(updater.getEmail() != null)
+        if (updater.getEmail() != null)
             user.setEmail(updater.getEmail());
-        if(updater.getPersonalAddress()!= null)
+        if (updater.getPersonalAddress() != null)
             user.setPersonalAddress(updater.getPersonalAddress());
-        if(updater.getBiography() != null)
+        if (updater.getBiography() != null)
             user.setBiography(updater.getBiography());
         user.setRemote(updater.isRemote());
     }

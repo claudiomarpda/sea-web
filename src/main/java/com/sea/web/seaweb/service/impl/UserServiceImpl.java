@@ -14,17 +14,14 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder encoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder encoder) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.encoder = encoder;
     }
 
     @Override
     public void save(User u) {
-        u.setPassword(encoder.encode(u.getPassword()));
         userRepository.save(u);
     }
 
@@ -55,7 +52,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findByKnowledgeAndPlace(String title, String place, int userId) {
-        List<User> list = userRepository.findByKnowledgeListTitleContainingAndUsualPlaces(title, place);
+        List<User> list = userRepository.findDistinctByKnowledgeListTitleContainingAndUsualPlaces(title, place);
         list.removeIf(c -> c.getId().equals(userId));
         return list;
     }

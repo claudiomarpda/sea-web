@@ -17,5 +17,5 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     Iterable<User> findByKnowledgeListTitleContaining(String title);
 
-    List<User> findByKnowledgeListTitleContainingAndUsualPlaces(String title, String usualPlace);
+    List<User> findDistinctByKnowledgeListTitleContainingAndUsualPlaces(String title, String usualPlace);
 }

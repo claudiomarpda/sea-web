@@ -5,6 +5,7 @@ import com.sea.web.seaweb.model.UserForm;
 import com.sea.web.seaweb.service.UserService;
 import com.sea.web.seaweb.util.UserFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,10 +20,12 @@ import java.util.Optional;
 public class AccountController {
 
     private final UserService userService;
+    private PasswordEncoder encoder;
 
     @Autowired
-    public AccountController(UserService userService) {
+    public AccountController(UserService userService, PasswordEncoder encoder) {
         this.userService = userService;
+        this.encoder = encoder;
     }
 
     @GetMapping("/signin")
@@ -59,6 +62,7 @@ public class AccountController {
                 model.addAttribute("emailExists", true);
                 return "signUp";
             }
+            userForm.setPassword(encoder.encode(userForm.getPassword()));
             User newUser = UserFactory.create(userForm);
             userService.save(newUser);
             return "redirect:/signin/after-signup?name=" + userForm.getFirstName();
