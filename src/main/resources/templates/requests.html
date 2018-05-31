@@ -11,8 +11,9 @@
   <head>
 <body>
 <header th:replace="topBar::topBar"></header>
-<section class="col-sm-6">
-  <h3>Requests</h3>
+<section class="col-sm-6 col-sm-offset-1">
+  <h1>Requests</h1>
+  <span class="help-block">From others users</span>
   <table class="table">
     <tr data-th-each="user, iterStat : *{userList}">
       <td>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">>
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,18 +24,27 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li sec:authorize="isAuthenticated()"><a href="/user/search/home">Search</a></li>
-        <li sec:authorize="isAuthenticated()"><a href="/user/contact/all">Contacts</a></li>
-        <li sec:authorize="isAuthenticated()"><a href="/user/knowledge">Knowledge</a></li>
-        <li sec:authorize="isAuthenticated()"><a href="/user/place">Places</a></li>
-        <li sec:authorize="isAuthenticated()"><a href="/user/profile">Profile</a></li>
-        <li sec:authorize="isAuthenticated()"><a href="/user/contact/requests">Requests</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/user/search/home">
+          <span class="glyphicon glyphicon-search"></span> Search</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/user/contact/all">
+          <span class="glyphicon glyphicon-user"></span> Contacts</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/user/knowledge">
+          <span class="glyphicon glyphicon-book"></span> Knowledge</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/user/place">
+          <span class="glyphicon glyphicon-map-marker"></span> Places</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/user/contact/requests">
+          <span class="glyphicon glyphicon-bell"></span> Requests</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/user/profile">
+          <span class="glyphicon glyphicon-cog"></span> Profile</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li sec:authorize="!isAuthenticated()"><a href="/signup">Sign Up</a></li>
-        <li sec:authorize="!isAuthenticated()"><a href="/signin">Login</a></li>
+        <li sec:authorize="!isAuthenticated()"><a href="/signup">
+          <span class="glyphicon glyphicon-globe"></span> Sign Up</a></li>
+        <li sec:authorize="!isAuthenticated()"><a href="/signin">
+          <span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         <!--Shows sign out option if user is authenticated-->
-        <li sec:authorize="isAuthenticated()"><a href="/logout">Logout</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/logout">
+          <span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
       </ul>
     </div>
   </div>
