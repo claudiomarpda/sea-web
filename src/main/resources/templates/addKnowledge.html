@@ -16,7 +16,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- AngularJS -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.min.js"></script>
-
+  <script th:src="@{/js/knowledgeController.js}"></script>
   <!--Webjars -->
   <!-- Does not preview libraries in html, so we load them with src -->
   <!-- Provides static analyzer when added to maven in pom.xml-->
@@ -83,50 +83,5 @@
     </div>
   </div>
 </section>
-<!-- Script is not in a separated file because it looses SECURITY CONTEXT -->
-<!-- When used in another file for REST API consuming, it get ACCESS DENIED-->
-<!-- Make sure you handle this before taking this script to another file -->
-<script>
-    var app = angular.module('myApp', []);
-
-    app.controller('knowledgeController', function ($scope, $http) {
-
-        $scope.hideForm = true;
-
-        $scope.show = function () {
-            $scope.hideForm = false;
-        };
-
-        $scope.cancel = function () {
-            $scope.hideForm = true;
-        };
-
-        $scope.findAll = function () {
-            $http.get("/user/knowledge/rest/all").then(function (value) {
-                $scope.knowledgeList = value.data;
-            });
-        };
-
-        $scope.save = function (title, description) {
-            if (title == null || description == null) {
-                return;
-            }
-            $http.post('/user/knowledge/rest/' + title + '/' + description)
-                .then(function () {
-                    $scope.findAll();
-                    $scope.hideForm = true;
-                    $scope.title = '';
-                    $scope.description = '';
-                })
-        };
-
-        $scope.delete = function (index) {
-            $http.delete('/user/knowledge/rest/' + index).then(function () {
-                $scope.findAll();
-            })
-        };
-
-    });
-</script>
 </body>
 </html>
