@@ -25,6 +25,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li sec:authorize="isAuthenticated()"><a href="/user/search/home">Search</a></li>
+        <li sec:authorize="isAuthenticated()"><a href="/user/contact/all">Contacts</a></li>
         <li sec:authorize="isAuthenticated()"><a href="/user/knowledge">Knowledge</a></li>
         <li sec:authorize="isAuthenticated()"><a href="/user/place">Places</a></li>
         <li sec:authorize="isAuthenticated()"><a href="/user/profile">Profile</a></li>

@@ -8,6 +8,10 @@ import javax.persistence.Id;
 @Entity
 public class ContactRequest {
 
+    public enum Status {
+        PENDING, ACCEPTED, REJECTED
+    }
+
     @Id
     @GeneratedValue
     @Column(name = "contact_request_id")
@@ -15,6 +19,11 @@ public class ContactRequest {
     private boolean accepted;
     private Integer senderId;
     private Integer receiverId;
+    private Status status;
+
+    public ContactRequest() {
+        status = Status.PENDING;
+    }
 
     public Integer getId() {
         return id;
@@ -30,6 +39,7 @@ public class ContactRequest {
 
     public void setAccepted(boolean accepted) {
         this.accepted = accepted;
+        status = accepted ? Status.ACCEPTED : Status.REJECTED;
     }
 
     public Integer getSenderId() {
@@ -47,4 +57,9 @@ public class ContactRequest {
     public void setReceiverId(Integer receiverId) {
         this.receiverId = receiverId;
     }
+
+    public Status getStatus() {
+        return status;
+    }
+
 }
