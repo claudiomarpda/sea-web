@@ -15,8 +15,8 @@
     <div class="form-group col-sm-10">
       <div class="col-sm-3">
         <label>
-          <img th:if="${user.getImage()}" th:src="@{'/user/image/'+ ${user.id}}" class="img-circle" width="150"
-               height="150">
+          <img th:if="${user.getImage()}" th:src="@{'/user/image/'+ ${user.id}}"
+               class="img-circle" width="150" height="150">
           <img th:if="!${user.getImage()}" th:src="@{/img/default-profile.png}" class="img-circle" width="150"
                height="150">
         </label>
@@ -29,15 +29,14 @@
             <span class="glyphicon glyphicon-user"></span> Request Contact
           </button>
         </form>
-        <h3><span th:if="${requestExists}" class="label label-info">Request exists</span></h3>
-        <h3><span th:if="${areConnected}" class="label label-info">You are connected</span></h3>
+        <h3><span th:if="${requestExists}" class="label label-default">Pending request</span></h3>
+        <h3><span th:if="${areConnected}" class="label label-default">Connected</span></h3>
       </div>
     </div>
     <div th:if="${isAccepted}" class="form-group">
       <label class="col-sm-3 control-label">Info for contact</label>
-      <div class="col-sm-3">
-        <p th:text="*{infoForContact}" maxlength="120"
-           style=" word-wrap: break-word; width: 100px;"></p>
+      <div class="col-sm-6">
+        <p th:text="*{infoForContact}"></p>
       </div>
     </div>
     <div class="form-group">

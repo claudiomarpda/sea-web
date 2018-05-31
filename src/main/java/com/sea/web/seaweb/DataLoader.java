@@ -33,6 +33,7 @@ public class DataLoader implements CommandLineRunner {
         user.getUsualPlaces().add("UFPB");
         user.setPassword(encoder.encode("w"));
         user.setGender("Male");
+        user.setInfoForContact("some@email.com");
         userService.save(user);
 
         for (int i = 1; i <= 5; i++) {
@@ -43,6 +44,7 @@ public class DataLoader implements CommandLineRunner {
             user.getUsualPlaces().add("UFPB");
             user.setPassword(encoder.encode("pass" + i));
             user.setGender("Male");
+            user.setInfoForContact("Phone: (83) 9 12345678. Whatsapp e Messenger. Email: some@email.com");
             userService.save(user);
         }
         for (int i = 6; i <= 10; i++) {
@@ -53,6 +55,7 @@ public class DataLoader implements CommandLineRunner {
             user.getUsualPlaces().add("IFPB");
             user.setPassword(encoder.encode("pass" + i));
             user.setGender("Female");
+            user.setInfoForContact("Phone: (83) 9 12345678, Whatsapp e Messenger. Email: some@email.com");
             userService.save(user);
         }
     }

@@ -16,9 +16,9 @@
   <table class="table">
     <tr data-th-each="user, iterStat : *{userList}">
       <td>
-        <img th:if="${user.getImage()}" th:src="@{'/user/image/'+ ${user.id}}" class="img-circle"
+        <img th:if="${user.image}" th:src="@{'/user/image/'+ ${user.id}}" class="img-circle"
              width="60" height="60">
-        <img th:if="!${user.getImage()}" th:src="@{/img/default-profile.png}" class="img-circle"
+        <img th:if="!${user.image}" th:src="@{/img/default-profile.png}" class="img-circle"
              width="60" height="60">
       </td>
       <td>
@@ -26,13 +26,17 @@
         <strong th:text="${user.biography}" style="max-width: 30px; max-lines: 1;"></strong>
       </td>
       <td>
-        <button class="btn btn-success">Accept</button>
+        <form th:method="post" th:action="@{'/user/contact/accept/' + ${user.id}}">
+          <button class="btn btn-success" type="submit">Accept</button>
+        </form>
       </td>
       <td>
-        <button class="btn btn-danger">Reject</button>
+        <form th:method="post" th:action="@{'/user/contact/reject/' + ${user.id}}">
+          <button class="btn btn-danger">Reject</button>
+        </form>
       </td>
-      <td><a th:href="@{'/user/' + ${user.getId()}}"></a>
-        <button class="btn btn-info">Profile</button>
+      <td>
+        <a th:href="@{'/user/' + ${user.id}}"><button class="btn btn-info">Profile</button></a>
       </td>
     </tr>
   </table>

@@ -20,19 +20,17 @@
         <table class="table table-hover">
           <tr data-th-each="user, iterStat : *{userList}">
             <td>
-              <img th:if="${user.getImage()}" th:src="@{'/user/image/'+ ${user.id}}" class="img-circle"
+              <img th:if="${user.image}" th:src="@{'/user/image/'+ ${user.id}}" class="img-circle"
                    width="80" height="80">
-              <img th:if="!${user.getImage()}" th:src="@{/img/default-profile.png}" class="img-circle"
+              <img th:if="!${user.image}" th:src="@{/img/default-profile.png}" class="img-circle"
                    width="80" height="80">
             </td>
             <td>
               <strong th:text="${user.firstName} + ' ' + ${user.lastName}"></strong>
-              <p class="contact-info" th:text="'Contact: ' + ${user.lastName}"></p>
+              <p class="contact-info" th:text="'Contact: ' + ${user.infoForContact}"></p>
             </td>
             <td>
-              <a th:href="@{'/user/' + ${user.getId()}}">
-                <button class="btn btn-default">Profile</button>
-              </a>
+              <a th:href="@{'/user/' + ${user.id}}"><button class="btn btn-default">Profile</button></a>
             </td>
           </tr>
         </table>
