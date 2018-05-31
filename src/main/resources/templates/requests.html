@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link th:href="@{/css/contacts.css}" rel="stylesheet"/>
+  <title>Requests</title>
+  <head>
+<body>
+<header th:replace="topBar::topBar"></header>
+<section class="col-sm-6">
+  <h3>Requests</h3>
+  <table class="table">
+    <tr data-th-each="user, iterStat : *{userList}">
+      <td>
+        <img th:if="${user.getImage()}" th:src="@{'/user/image/'+ ${user.id}}" class="img-circle"
+             width="60" height="60">
+        <img th:if="!${user.getImage()}" th:src="@{/img/default-profile.png}" class="img-circle"
+             width="60" height="60">
+      </td>
+      <td>
+        <strong th:text="${user.firstName} + ' ' + ${user.lastName}"></strong>
+        <strong th:text="${user.biography}" style="max-width: 30px; max-lines: 1;"></strong>
+      </td>
+      <td>
+        <button class="btn btn-success">Accept</button>
+      </td>
+      <td>
+        <button class="btn btn-danger">Reject</button>
+      </td>
+      <td><a th:href="@{'/user/' + ${user.getId()}}"></a>
+        <button class="btn btn-info">Profile</button>
+      </td>
+    </tr>
+  </table>
+</section>
+</body>
+</html>

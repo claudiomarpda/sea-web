@@ -82,6 +82,15 @@ public class UserController {
             if (opt.isPresent()) {
                 User user = opt.get();
                 model.addAttribute(user);
+
+                if(user.getContactsRequest().containsKey(sender.getId())) {
+                    if(user.getContactsRequest().get(sender.getId()).isAccepted()) {
+                        model.addAttribute("isAccepted", true);
+                    }
+                    else {
+                        model.addAttribute("isAccepted", false);
+                    }
+                }
             }
 
             if(sender.getContactsRequest().containsKey(id)) {
@@ -98,7 +107,6 @@ public class UserController {
             else {
                 model.addAttribute("requestExists", false);
             }
-
         }
         return "user";
     }

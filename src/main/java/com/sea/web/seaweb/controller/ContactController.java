@@ -76,7 +76,8 @@ public class ContactController {
             List<User> userList = new ArrayList<>();
 
             user.getContactsRequest().forEach((k, v) -> {
-                if(!v.isAccepted() && v.getStatus() == ContactRequest.Status.PENDING) {
+                if(!v.isAccepted() && !v.getSenderId().equals(user.getId())
+                        && v.getStatus() == ContactRequest.Status.PENDING) {
                     Optional<User> o = userService.findById(k);
                     o.ifPresent(userList::add);
                 }

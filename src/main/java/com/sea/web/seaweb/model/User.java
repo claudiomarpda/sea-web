@@ -22,6 +22,7 @@ public class User {
     private String gender;
     private String biography;
     private boolean remote;
+    private String infoForContact;
 
     @Lob
     private byte[] image;
@@ -153,5 +154,13 @@ public class User {
 
     public void setContactsRequest(Map<Integer, ContactRequest> contactsRequest) {
         this.contactsRequest = contactsRequest;
+    }
+
+    public String getInfoForContact() {
+        return infoForContact;
+    }
+
+    public void setInfoForContact(String infoForContact) {
+        this.infoForContact = infoForContact;
     }
 }
