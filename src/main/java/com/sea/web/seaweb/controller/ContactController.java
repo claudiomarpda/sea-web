@@ -95,7 +95,7 @@ public class ContactController {
         User sender = optSender.orElse(null);
         assert receiver != null;
         assert sender != null;
-        setRequestStatus(senderId, sender, receiver, true);
+        setRequestStatus(sender, receiver, true);
         return "redirect:/user/contact/requests";
     }
 
@@ -108,19 +108,39 @@ public class ContactController {
         User sender = optSender.orElse(null);
         assert receiver != null;
         assert sender != null;
-        setRequestStatus(senderId, sender, receiver, false);
+
+        // Use one of the following options:
+        // Option 1
+        // Use this to block new requests from the same user
+        // setRequestStatus(senderId, sender, receiver, false);
+
+        // Option 2
+        // Use this to allow new requests from the same user
+        removeRequest(sender, receiver);
+
         return "redirect:/user/contact/requests";
     }
 
-    private void setRequestStatus(int senderId, User sender, User receiver, boolean accept) {
-        // Receiver
-        int receiverId;
-        receiver.getContactsRequest().get(senderId).setAccepted(accept);
+    /**
+     * Remove contact requests from both users.
+     */
+    private void removeRequest(User sender, User receiver) {
+        sender.getContactsRequest().remove(receiver.getId());
+        receiver.getContactsRequest().remove(sender.getId());
+        userService.save(sender);
         userService.save(receiver);
-        receiverId = receiver.getId();
+    }
+
+    /**
+     * Set contact request status after user decision.
+     */
+    private void setRequestStatus(User sender, User receiver, boolean accept) {
+        // Receiver
+        receiver.getContactsRequest().get(sender.getId()).setAccepted(accept);
+        userService.save(receiver);
 
         // Sender
-        sender.getContactsRequest().get(receiverId).setAccepted(accept);
+        sender.getContactsRequest().get(receiver.getId()).setAccepted(accept);
         userService.save(sender);
     }
 }
