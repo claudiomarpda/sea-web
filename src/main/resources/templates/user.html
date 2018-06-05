@@ -6,12 +6,12 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <title>Title</title>
+  <title>User</title>
 </head>
 <body>
 <header th:replace="topBar::topBar"></header>
-<section th:object="${user}" class="container">
-  <div class="form-horizontal" style="margin: 50px">
+<div th:object="${user}" class="container">
+  <section class="form-horizontal" style="margin: 50px">
     <div class="form-group col-sm-10">
       <div class="col-sm-3">
         <label>
@@ -82,8 +82,8 @@
         <p th:text="*{personalAddress.neighborhood != null} ? *{personalAddress.neighborhood} : 'empty'">static</p>
       </div>
     </div>
-  </div>
-  <div th:if="${areConnected}">
+  </section>
+  <section th:if="${areConnected}">
     <h2>Knowledge</h2>
     <table class="table table-hover">
       <thead>
@@ -101,7 +101,25 @@
     <div th:if="${user.knowledgeList.isEmpty()}">
       <span class="help-block">Nothing here</span>
     </div>
-  </div>
-</section>
+  </section>
+  <section th:if="${areConnected}">
+    <h2>Usual Places</h2>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Title</th>
+      </tr>
+      </thead>
+      <tr th:each="p : *{usualPlaces}">
+        <td th:text="${pStat.index + 1}"></td>
+        <td th:text="${p}"></td>
+      </tr>
+    </table>
+    <div th:if="${user.usualPlaces.isEmpty()}">
+      <span class="help-block">Nothing here</span>
+    </div>
+  </section>
+</div>
 </body>
 </html>
