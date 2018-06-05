@@ -23,18 +23,23 @@
       <a class="navbar-brand" href="/">SEA</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li sec:authorize="isAuthenticated()"><a href="/user/search/home">
-          <span class="glyphicon glyphicon-search"></span> Search</a></li>
-        <li sec:authorize="isAuthenticated()"><a href="/user/contact/all">
+      <ul sec:authorize="isAuthenticated()" class="nav navbar-nav">
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          <span class="glyphicon glyphicon-search"></span> Search <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/user/search/place">Search by Place</a></li>
+            <li><a href="/user/search/city">Search by City</a></li>
+          </ul>
+        </li>
+        <li><a href="/user/contact/all">
           <span class="glyphicon glyphicon-user"></span> Contacts</a></li>
-        <li sec:authorize="isAuthenticated()"><a href="/user/knowledge">
+        <li><a href="/user/knowledge">
           <span class="glyphicon glyphicon-book"></span> Knowledge</a></li>
-        <li sec:authorize="isAuthenticated()"><a href="/user/place">
+        <li><a href="/user/place">
           <span class="glyphicon glyphicon-map-marker"></span> Places</a></li>
-        <li sec:authorize="isAuthenticated()"><a href="/user/contact/requests">
+        <li><a href="/user/contact/requests">
           <span class="glyphicon glyphicon-bell"></span> Requests</a></li>
-        <li sec:authorize="isAuthenticated()"><a href="/user/profile">
+        <li><a href="/user/profile">
           <span class="glyphicon glyphicon-cog"></span> Profile</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">

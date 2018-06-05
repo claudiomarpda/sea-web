@@ -24,21 +24,43 @@ public class SearchController {
         this.userService = userService;
     }
 
-    @GetMapping("/home")
-    public String search(Model model) {
+    @GetMapping("/place")
+    public String searchByPlace(Model model) {
         Search search = new Search();
         model.addAttribute(search);
+        model.addAttribute("byPlace", true);
         return "search";
     }
 
-    @GetMapping("/")
-    public String findByKnowledgeAndPlace(@ModelAttribute Search search, Principal principal) {
+    @GetMapping("/city")
+    public String searchByCity(Model model) {
+        Search search = new Search();
+        model.addAttribute(search);
+        model.addAttribute("byCity", true);
+        return "search";
+    }
+
+    @GetMapping("/find-by-place")
+    public String findByKnowledgeAndPlace(@ModelAttribute Search search, Principal principal, Model model) {
         Optional<User> opt = userService.findByEmail(principal.getName());
         if (opt.isPresent()) {
             List<User> users = userService.findByKnowledgeAndPlace(
                     search.getKnowledge(), search.getPlace(), opt.get().getId());
             search.setResult(users);
         }
+        model.addAttribute("byPlace", true);
+        return "search";
+    }
+
+    @GetMapping("/find-by-city")
+    public String findByKnowledgeAndCity(@ModelAttribute Search search, Principal principal, Model model) {
+        Optional<User> opt = userService.findByEmail(principal.getName());
+        if (opt.isPresent()) {
+            List<User> users = userService.findByKnowledgeAndCity(
+                    search.getKnowledge(), search.getPlace(), opt.get().getId());
+            search.setResult(users);
+        }
+        model.addAttribute("byCity", true);
         return "search";
     }
 }

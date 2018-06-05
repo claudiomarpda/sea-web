@@ -56,4 +56,11 @@ public class UserServiceImpl implements UserService {
         list.removeIf(c -> c.getId().equals(userId));
         return list;
     }
+
+    @Override
+    public List<User> findByKnowledgeAndCity(String title, String city, int userId) {
+        List<User> list = userRepository.findDistinctByKnowledgeListTitleContainingAndPersonalAddressCityContaining(title, city);
+        list.removeIf(c -> c.getId().equals(userId));
+        return list;
+    }
 }

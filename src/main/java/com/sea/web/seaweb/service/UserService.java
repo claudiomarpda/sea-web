@@ -20,4 +20,7 @@ public interface UserService {
     Iterable<User> findByKnowledge(String place);
 
     List<User> findByKnowledgeAndPlace(String place, String title, int userId);
+
+    List<User> findByKnowledgeAndCity(String title, String city, int userId);
+
 }
