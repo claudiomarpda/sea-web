@@ -29,6 +29,12 @@
             <span class="glyphicon glyphicon-user"></span> Request Contact
           </button>
         </form>
+        <form th:if="${areConnected}" th:method="post"
+              th:action="@{'/user/contact/remove/' + ${user.id}}">
+          <button class="btn btn-default" type="submit">
+            <span class="glyphicon glyphicon-user"></span> Remove Contact
+          </button>
+        </form>
         <h3><span th:if="${requestExists}" class="label label-default">Pending request</span></h3>
         <h3><span th:if="${areConnected}" class="label label-default">Connected</span></h3>
       </div>

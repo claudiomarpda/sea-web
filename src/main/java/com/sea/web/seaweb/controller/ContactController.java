@@ -124,11 +124,11 @@ public class ContactController {
     /**
      * Remove contact requests from both users.
      */
-    private void removeRequest(User sender, User receiver) {
-        sender.getContactsRequest().remove(receiver.getId());
-        receiver.getContactsRequest().remove(sender.getId());
-        userService.save(sender);
-        userService.save(receiver);
+    private void removeRequest(User one, User two) {
+        one.getContactsRequest().remove(two.getId());
+        two.getContactsRequest().remove(one.getId());
+        userService.save(one);
+        userService.save(two);
     }
 
     /**
@@ -143,4 +143,20 @@ public class ContactController {
         sender.getContactsRequest().get(receiver.getId()).setAccepted(accept);
         userService.save(sender);
     }
+
+    @PostMapping("/remove/{targetId}")
+    public String removeContact(@PathVariable int targetId, Principal principal) {
+        Optional<User> optRemover = userService.findByEmail(principal.getName());
+        Optional<User> optTarget = userService.findById(targetId);
+
+        User remover = optRemover.orElse(null);
+        User target = optTarget.orElse(null);
+        assert remover != null;
+        assert target != null;
+
+        removeRequest(remover, target);
+
+        return "redirect:/user/" + targetId;
+    }
+
 }
