@@ -11,13 +11,13 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 public class DataLoader implements CommandLineRunner {
 
     private final UserService userService;
     private PasswordEncoder encoder;
 
-    @Autowired
+//    @Autowired
     public DataLoader(UserService userService, PasswordEncoder encoder) {
         this.userService = userService;
         this.encoder = encoder;
