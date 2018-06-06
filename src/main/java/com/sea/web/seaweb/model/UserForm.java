@@ -24,6 +24,17 @@ public class UserForm {
     @Size(min = 6, max = 30)
     private String password;
 
+    @Size(min = 6, max = 30)
+    private String passwordVerification;
+
+    public String getPasswordVerification() {
+        return passwordVerification;
+    }
+
+    public void setPasswordVerification(String passwordVerification) {
+        this.passwordVerification = passwordVerification;
+    }
+
     public String getFirstName() {
         return firstName;
     }

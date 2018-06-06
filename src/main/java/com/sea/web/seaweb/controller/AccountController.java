@@ -48,15 +48,22 @@ public class AccountController {
     }
 
     @GetMapping("/signup")
-    public String showSignUp(Model model) {
+    public String showSignUp(Model model, Principal principal) {
+        if(principal != null) {
+            return "home";
+        }
         model.addAttribute(new UserForm());
         return "signUp";
     }
 
     @PostMapping("/signup")
     public String checkSignUp(@Valid UserForm userForm, BindingResult bindingResult, Model model) {
-        System.out.println(userForm);
         if(!bindingResult.hasErrors() && userForm != null) {
+            // Password verification
+            if(!userForm.getPassword().equals(userForm.getPasswordVerification())) {
+                model.addAttribute("passwordsNotEqual", true);
+                return "signUp";
+            }
             Optional<User> opt = userService.findByEmail(userForm.getEmail());
             if(opt.isPresent()) {
                 model.addAttribute("emailExists", true);

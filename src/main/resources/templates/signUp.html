@@ -56,6 +56,14 @@
                required>
         <div class="alert alert-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
       </div>
+      <div class="form-group">
+        <label for="password">Confirm Password</label>
+        <input th:field="*{passwordVerification}" type="password" class="form-control" id="password_verification"
+               placeholder="Password" required>
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('passwordVerification')}"
+             th:errors="*{password}"></div>
+      </div>
+      <div th:if="${passwordsNotEqual}" class="alert alert-danger">Passwords are not equal</div>
       <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
     </form>
   </div>
