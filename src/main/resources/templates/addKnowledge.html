@@ -15,14 +15,13 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- AngularJS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.min.js"></script>
-  <script th:src="@{/js/knowledgeController.js}"></script>
+  <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.0/angular.min.js"></script>-->
   <!--Webjars -->
   <!-- Does not preview libraries in html, so we load them with src -->
   <!-- Provides static analyzer when added to maven in pom.xml-->
   <!-- No need to load webjar here to activate static analyzer -->
-  <!--<script th:src="@{/webjars/angularjs/1.7.0/angular.min.js}"></script>-->
-
+  <script th:src="@{/webjars/angularjs/1.7.0/angular.min.js}"></script>
+  <script th:src="@{/js/knowledgeController.js}"></script>
   <title>Knowledge</title>
 </head>
 <body>
